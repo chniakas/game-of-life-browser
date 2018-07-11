@@ -1,0 +1,20 @@
+{
+  "name": "game-of-life-browser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bower": "^1.8.4",
+    "generator-jasmine": "^2.0.1",
+    "jasmine-core": "^3.1.0",
+    "yo": "^2.0.4"
+  },
+  "devDependencies": {
+    "jasmine": "^3.1.0"
+  }
+}
