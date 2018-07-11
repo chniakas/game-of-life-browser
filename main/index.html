@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Game of Life</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+    <script src="../src/GameOfLife.js" charset="utf-8"></script>
+    <script src="./scripts/main.js" charset="utf-8"></script>
+    <script id="grid-template" type="text/x-handlebars-template">
+        <table class="grid">
+          <tbody>
+              {{#rows}}
+              <tr>
+                {{#columns}}
+                  <td class="grid-cell" title="{{state}}"></td>
+                {{/columns}}
+              </tr>
+              {{/rows}}
+          </tbody>
+        </table>
+    </script>
+
+  </head>
+  <body>
+    <div class="dimensions">
+      <label for="X">x-dimension: </label>
+      <input id="x-dimension" type="number" name="X" min="1" value="4" required>
+
+      <label for="Y">y-dimension: </label>
+      <input id="y-dimension" type="number" name="Y" min="1" value="4" required>
+
+      <button id="setDimensions" type="button" name="start">Set the dimensions</button>
+    </div>
+    <div class="toggle-buttons">
+      <button id="startButton" type="button" name="start">Start the game</button>
+      <button id="stopButton" type="button" name="start">Stop the game</button>
+    </div>
+    <div class="grid-container"></div>
+
+  </body>
+</html>

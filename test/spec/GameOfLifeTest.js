@@ -53,28 +53,31 @@
 
     it("should progress properly", function() {
 
-      gameOfLife.setGridDimensions(4, 4);
-      var points = [{x: 1, y: 1}, {x: 2, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}];
+      gameOfLife.setGridDimensions(5, 5);
+      var points = [{x: 2, y: 1}, {x: 2, y: 2}, {x: 2, y: 3}];
       gameOfLife.setAlivePoints(points);
-      // initially: D D D D
-      //            D A D D
-      //            D A A D
-      //            D D D A
+      // initially: D D D D D
+      //            D D D D D
+      //            D A A A D
+      //            D D D D D
+      //            D D D D D
 
       gameOfLife.nextStep();
-      // step 1:    D D D D
-      //            D A A D
-      //            D A A D
-      //            D D A D
-      var step1Points = [{x: 1, y: 1}, {x: 1, y: 2}, {x: 2, y: 1}, {x: 2, y: 2}, {x: 3, y: 2}];
+      // step 1:    D D D D D
+      //            D D A D D
+      //            D D A D D
+      //            D D A D D
+      //            D D D D D
+      var step1Points = [{x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2}];
       expect(gameOfLife.getAlivePoints()).toBeEqualToPoints(step1Points);
 
       gameOfLife.nextStep();
-      // step 2:    D D D D
-      //            D A A D
-      //            D D D A
-      //            D A A D
-      var step2Points = [{x: 1, y: 1}, {x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 1}, {x: 3, y: 2}];
+      // step 2:    D D D D D
+      //            D D D D D
+      //            D A A A D
+      //            D D D D D
+      //            D D D D D
+      var step2Points = [{x: 2, y: 1}, {x: 2, y: 2}, {x: 2, y: 3}];
       expect(gameOfLife.getAlivePoints()).toBeEqualToPoints(step2Points);
     });
   });

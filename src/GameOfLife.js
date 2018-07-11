@@ -84,6 +84,10 @@ GameOfLife.prototype.setAlivePoints = function(points) {
   points.forEach((p) => this.grid.setAlive(p.x, p.y));
 };
 
+GameOfLife.prototype.setAlivePoint = function(point) {
+  this.setAlivePoints([point]);
+};
+
 GameOfLife.prototype.getAlivePoints = function () {
   var alivePoints = [];
   for (var i = 0; i < this.grid.getX(); i++) {
