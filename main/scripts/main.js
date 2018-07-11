@@ -1,13 +1,10 @@
+var interval = null;
+
 $(document).ready(function() {
 
-  var gameOfLife = new GameOfLife();
-  var interval = null;
+  $("#stopButton").hide();
 
-  function clearIntervalIfNeeded() {
-    if (interval !== null) {
-      clearInterval(interval);
-    }
-  }
+  var gameOfLife = new GameOfLife();
 
   $("#setDimensions").click(function() {
     clearIntervalIfNeeded();
@@ -17,40 +14,45 @@ $(document).ready(function() {
       alert('Please enter valid dimensions');
       return;
     }
-    gameOfLife.setGridDimensions(X, Y);
+    gameOfLife.setGridDimensions(Y, X);
     createGridFromGameOfLife(gameOfLife);
   });
 
   $("#startButton").click(function() {
-    var nextGrid = function () {
-      gameOfLife.nextStep();
-      createGridFromGameOfLife(gameOfLife);
+
+    if (gameOfLife.getGrid() == null) {
+      alert("Create a grid first!");
+      return;
     }
 
     clearIntervalIfNeeded();
-    interval = setInterval(nextGrid, 500);
+    interval = setInterval(function () {
+      gameOfLife.nextStep();
+      createGridFromGameOfLife(gameOfLife);
+    }, 500);
+
+    $(this).hide();
+    $("#stopButton").show();
   });
 
   $("#stopButton").click(function() {
     clearIntervalIfNeeded();
+    $(this).hide();
+    $("#startButton").show();
   });
 });
-
-function isValidDimension(d) {
-  return d > 0;
-}
 
 function createGridFromGameOfLife(gameOfLife) {
   var rows = createData(gameOfLife.getGrid());
   createGridFromData(gameOfLife, rows);
 }
 
-function createData(grid) {
+function createData(grid2d) {
   var rows = [];
-  for (var i = 0; i < grid.getX(); i++) {
+  for (var i = 0; i < grid2d.getX(); i++) {
     var columns = [];
-    for (var j = 0; j < grid.getY(); j++) {
-      var state = grid.isAlive(i, j) ? 'alive' : 'dead';
+    for (var j = 0; j < grid2d.getY(); j++) {
+      var state = grid2d.isAlive(i, j) ? 'alive' : 'dead';
       columns.push({'state': state});
     }
     rows.push({'columns': columns});
@@ -59,18 +61,47 @@ function createData(grid) {
 }
 
 function createGridFromData(gameOfLife, rows) {
+  createHandlebarsTable(rows);
+
+  $(".grid-cell").click(function() {
+    if (isGameInProgress()) {
+      return;
+    }
+    toggleCellInTable(this);
+    toggleCellInGrid2d(gameOfLife, this);
+  });
+}
+
+function createHandlebarsTable(rows) {
   var source = $("#grid-template").html();
   var template = Handlebars.compile(source);
   $(".grid-container").html(template({'rows': rows}));
+}
 
-  $(".grid-cell").click(function() {
-    var state = $(this).attr("title");
-    var toggledState = state === "alive" ? "dead" : "alive";
-    $(this).attr("title", toggledState);
+function toggleCellInTable(cell) {
+  var state = $(cell).attr("title");
+  var toggledState = state === "alive" ? "dead" : "alive";
+  $(cell).attr("title", toggledState);
+}
 
-    var parentRow = $(this).parent();
-    var i = parentRow.children().index($(this));
-    var j = parentRow.parent().children().index(parentRow);
-    gameOfLife.setAlivePoint({'x': j, 'y': i});
-  });
+function toggleCellInGrid2d(gameOfLife, cell) {
+  var parentRow = $(cell).parent();
+  var i = parentRow.children().index($(cell));
+  var j = parentRow.parent().children().index(parentRow);
+  gameOfLife.getGrid().toggle(j, i);
+}
+
+function clearIntervalIfNeeded() {
+  if (isGameInProgress()) {
+    clearInterval(interval);
+    interval = null;
+  }
+}
+
+function isGameInProgress() {
+  return interval !== null;
+}
+
+function isValidDimension(d) {
+  return d > 0;
 }

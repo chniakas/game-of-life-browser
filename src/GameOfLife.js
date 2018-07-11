@@ -35,6 +35,10 @@ Grid2D.prototype.setDead = function (i, j) {
   this.grid[i][j] = false;
 };
 
+Grid2D.prototype.toggle = function (i, j) {
+  this.grid[i][j] = !this.grid[i][j];
+};
+
 Grid2D.prototype.clone = function() {
   var clonedGrid = JSON.parse(JSON.stringify(this.grid));
   var gridObject = new Grid2D(0, 0);
@@ -82,10 +86,6 @@ GameOfLife.prototype.getGrid = function() {
 
 GameOfLife.prototype.setAlivePoints = function(points) {
   points.forEach((p) => this.grid.setAlive(p.x, p.y));
-};
-
-GameOfLife.prototype.setAlivePoint = function(point) {
-  this.setAlivePoints([point]);
 };
 
 GameOfLife.prototype.getAlivePoints = function () {
