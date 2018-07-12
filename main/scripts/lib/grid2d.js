@@ -1,11 +1,5 @@
 window.GOL.Grid2D = (function (){
 
-  function arrayOfSize(n) {
-    var array = [];
-    array.length = n;
-    return array;
-  }
-
   class Grid2D {
 
     constructor(X, Y) {
@@ -14,9 +8,9 @@ window.GOL.Grid2D = (function (){
         return;
       }
 
-      this.grid = arrayOfSize(X);
+      this.grid = Array(X);
       for (var i = 0; i < X; i++) {
-        this.grid[i] = arrayOfSize(Y);
+        this.grid[i] = Array(Y);
         for (var j = 0; j < Y; j++) {
           this.grid[i][j] = false;
         }
@@ -48,35 +42,27 @@ window.GOL.Grid2D = (function (){
     }
 
     clone() {
-      var clonedGrid = JSON.parse(JSON.stringify(this.grid));
-      var gridObject = new Grid2D(0, 0);
-      gridObject.grid = clonedGrid;
+      var gridObject = new Grid2D();
+      gridObject.grid = JSON.parse(JSON.stringify(this.grid));
       return gridObject;
     }
 
     countAliveNeighbours(i, j) {
-      var count = 0;
-      count += this.safeCountNeighbour(i, j - 1);
-      count += this.safeCountNeighbour(i, j + 1);
-      count += this.safeCountNeighbour(i - 1, j);
-      count += this.safeCountNeighbour(i + 1, j);
-      count += this.safeCountNeighbour(i - 1, j - 1);
-      count += this.safeCountNeighbour(i - 1, j + 1);
-      count += this.safeCountNeighbour(i + 1, j - 1);
-      count += this.safeCountNeighbour(i + 1, j + 1);
+      var count = -this.safeCountNeighbour(i, j);
+      [i - 1, i , i + 1].forEach((i) =>
+      [j - 1, j , j + 1].forEach((j) =>
+        count += this.safeCountNeighbour(i, j)));
       return count;
     }
 
     safeCountNeighbour(i, j) {
-      if (i < 0 || i >= this.getX()) {
+      var invalid = (m, M) => m < 0 || m >= M;
+
+      if (invalid(i, this.getX()) || invalid(j, this.getY())) {
         return 0;
       }
 
-      if (j < 0 || j >= this.getY()) {
-        return 0;
-      }
-
-      return this.isAlive(i, j) ? 1 : 0;
+      return this.isAlive(i, j);
     }
   }
 

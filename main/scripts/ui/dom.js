@@ -23,7 +23,7 @@ window.GOL.dom = (function () {
 
   function toggleCellInHtml(cell) {
     var state = $(cell).attr("title");
-    var toggledState = state === "alive" ? "dead" : "alive";
+    var toggledState = (state === "alive") ? "dead" : "alive";
     $(cell).attr("title", toggledState);
   }
 

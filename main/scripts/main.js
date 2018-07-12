@@ -3,10 +3,14 @@ $(document).ready(function() {
     var intervals = [];
     var games = [];
 
+    const min = 1;
+    const max = 10;
+
     $("#setDimensions").click(function() {
+      var valid = (d) => d >= min && d <= max;
       var {X, Y} = getDimensions();
-      if (!isValidDimension(X) || !isValidDimension(Y)) {
-        alert('Please enter valid dimensions ([1, 10])');
+      if (!valid(X) || !valid(Y)) {
+        alert(`Please enter valid dimensions in [${min}, ${max}]`);
         return;
       }
       var game = new window.GOL.GameOfLife();
@@ -68,10 +72,6 @@ $(document).ready(function() {
 
     function gameInProgress(index) {
       return intervals[index] !== null;
-    }
-
-    function isValidDimension(d) {
-      return d > 0 && d <= 10;
     }
 
     function showStart(index) {
