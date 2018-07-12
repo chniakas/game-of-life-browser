@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      window.GOI = {};
+    </script>
+    <script src="./scripts/grid2d.js" charset="utf-8"></script>
     <script src="./scripts/GameOfLife.js" charset="utf-8"></script>
     <script src="./scripts/main.js" charset="utf-8"></script>
     <script id="grid-template" type="text/x-handlebars-template">
@@ -21,7 +25,16 @@
           </tbody>
         </table>
     </script>
-
+    <script id="game-template" type="text/x-handlebars-template">
+      <div id="game-{{id}}" class="game-container">
+        <hr>
+        <div class="toggle-buttons">
+          <button class="startButton" type="button" name="start">Start the game</button>
+          <button class="stopButton" type="button" name="start">Stop the game</button>
+        </div>
+        <div class="grid-container"></div>
+      </div>
+    </script>
   </head>
   <body>
     <div class="dimensions">
@@ -33,11 +46,8 @@
 
       <button id="setDimensions" type="button" name="start">Create grid</button>
     </div>
-    <div class="toggle-buttons">
-      <button id="startButton" type="button" name="start">Start the game</button>
-      <button id="stopButton" type="button" name="start">Stop the game</button>
-    </div>
-    <div class="grid-container"></div>
+    <div class="games-container">
 
+    </div>
   </body>
 </html>

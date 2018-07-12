@@ -28,7 +28,7 @@
   table-layout: fixed;
 }
 
-[class="grid-cell"] {
+.grid-cell {
   width: 1em;
   height: 1em;
   cursor: pointer;
