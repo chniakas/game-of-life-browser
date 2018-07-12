@@ -10,56 +10,73 @@ $(document).ready(function() {
         alert('Please enter valid dimensions ([1, 10])');
         return;
       }
-      var gameOfLife = new window.GOI.GameOfLife();
+      var gameOfLife = new window.GOL.GameOfLife();
       var gameId = gamesOfLife.length;
 
       gameOfLife.setGridDimensions(Y, X);
       gamesOfLife.push(gameOfLife);
       intervals.push(null);
-      window.GOI.grid.createFromGameOfLife(gameOfLife, gameId);
+      window.GOL.grid.createFromGameOfLife(gameOfLife, gameId);
     });
 
     $(".games-container").on("click", ".grid-cell", function() {
-      window.GOI.dom.toggleCellInHtml(this);
-      var info = window.GOI.dom.gameIndexFromCell(this);
+      var info = window.GOL.dom.gameIndexFromCell(this);
+      if (isGameInProgress(info.index)) {
+        return;
+      }
+
+      window.GOL.dom.toggleCellInHtml(this);
       gamesOfLife[info.index].getGrid().toggle(info.j, info.i);
     });
 
     $(".games-container").on("click", ".startButton", function() {
-      var index = window.GOI.dom.gameIndexFromButton($(this));
+      var index = window.GOL.dom.gameIndexFromButton($(this));
       clearIntervalIfNeeded(index);
       intervals[index] = setInterval(function () {
         var gameOfLife = gamesOfLife[index];
+
+        var previousPoints = gameOfLife.getAlivePoints();
         gameOfLife.nextStep();
-        window.GOI.grid.updateFromGameOfLife(gameOfLife, index);
+        var newPoints = gameOfLife.getAlivePoints();
+
+        window.GOL.grid.updateFromGameOfLife(gameOfLife, index);
+        if (window.GOL.areEqualPoints(previousPoints, newPoints)) {
+          showStart(index);
+        }
       }, 500);
 
-      $(this).hide();
-      $(".stopButton", $(this).parent()).show();
+      showStop(index);
     });
 
     $(".games-container").on("click", ".stopButton", function() {
-      var index = window.GOI.dom.gameIndexFromButton($(this));
-      clearIntervalIfNeeded(index);
-      $(this).hide();
-      $(".startButton", $(this).parent()).show();
+      var index = window.GOL.dom.gameIndexFromButton($(this));
+      showStart(index);
     });
 
     function clearIntervalIfNeeded(index) {
-      var interval = intervals[index];
-      if (isGameInProgress(interval)) {
-        clearInterval(interval);
+      if (isGameInProgress(index)) {
+        clearInterval(intervals[index]);
         intervals[index] = null;
       }
     }
 
-    function isGameInProgress(interval) {
-      return interval !== null;
+    function isGameInProgress(index) {
+      return intervals[index] !== null;
     }
 
     function isValidDimension(d) {
       return d > 0 && d <= 10;
     }
 
+    function showStart(index) {
+      clearIntervalIfNeeded(index);
+      $(`#game-${index} .startButton`).show();
+      $(`#game-${index} .stopButton`).hide();
+    }
+
+    function showStop(index) {
+      $(`#game-${index} .startButton`).hide();
+      $(`#game-${index} .stopButton`).show();
+    }
   })();
 });

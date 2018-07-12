@@ -5,9 +5,23 @@ window.GOI.grid = (function () {
     createGridFromData(gameId, rows);
   }
 
+  function createGridFromData(gameId, rows) {
+    var gameDom = window.GOI.dom.createFromTemplate("#game-template", {"id": gameId});
+    var gridDom = window.GOI.dom.createFromTemplate("#grid-template", {'rows': rows});
+
+    $(".games-container").append(gameDom);
+    $(`#game-${gameId} .grid-container`).html(gridDom);
+    $(`#game-${gameId} .stopButton`).hide();
+  }
+
   function updateFromGameOfLife(gameOfLife, index) {
     var rows = createData(gameOfLife.getGrid());
     updateGridFromData(index, rows);
+  }
+
+  function updateGridFromData(gameId, rows) {
+    var gridDom = window.GOI.dom.createFromTemplate("#grid-template", {'rows': rows});
+    $(`#game-${gameId} .grid-container`).html(gridDom);
   }
 
   function createData(grid2d) {
@@ -23,22 +37,8 @@ window.GOI.grid = (function () {
     return rows;
   }
 
-  function createGridFromData(gameId, rows) {
-    var gameDom = window.GOI.dom.createFromTemplate("#game-template", {"id": gameId});
-    var gridDom = window.GOI.dom.createFromTemplate("#grid-template", {'rows': rows});
-
-    $(".games-container").append(gameDom);
-    $("#game-" + gameId + " .grid-container").html(gridDom);
-    $("#game-" + gameId + " .stop-button").hide();
-  }
-
-  function updateGridFromData(gameId, rows) {
-    var gridDom = window.GOI.dom.createFromTemplate("#grid-template", {'rows': rows});
-    $("#game-" + gameId + " .grid-container").html(gridDom);
-  }
-
   return {
-    'createFromGameOfLife': createFromGameOfLife,
-    'updateFromGameOfLife': updateFromGameOfLife
+    createFromGameOfLife: createFromGameOfLife,
+    updateFromGameOfLife: updateFromGameOfLife
   };
 })();

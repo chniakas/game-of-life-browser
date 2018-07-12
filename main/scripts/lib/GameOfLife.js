@@ -46,3 +46,22 @@ window.GOI.GameOfLife = (function () {
 
   return GameOfLife;
 })();
+
+
+window.GOI.areEqualPoints = function (actualPoints, expectedPoints) {
+    if (actualPoints.length !== expectedPoints.length) {
+      return false;
+    }
+
+    var length = actualPoints.length;
+    var equalPoints = (p1, p2) => p1.x === p2.x && p1.y === p2.y;
+
+    for (var i = 0; i < length; i++) {
+      if (expectedPoints.findIndex(
+        (p) => equalPoints(actualPoints[i], p)) === -1 ) {
+        return false;
+      }
+    }
+
+    return true;
+};
