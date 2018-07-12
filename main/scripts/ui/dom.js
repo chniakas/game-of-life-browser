@@ -37,7 +37,7 @@ window.GOL.dom = (function () {
   }
 
   function ancestor(node, n) {
-    while(n-- > 0) {
+    while (n-- > 0) {
       node = node.parent();
     }
     return node;

@@ -1,5 +1,11 @@
 window.GOL.Grid2D = (function (){
 
+  function arrayOfSize(n) {
+    var array = [];
+    array.length = n;
+    return array;
+  }
+
   class Grid2D {
 
     constructor(X, Y) {
@@ -8,11 +14,9 @@ window.GOL.Grid2D = (function (){
         return;
       }
 
-      this.grid = [];
-      this.grid.length = X;
+      this.grid = arrayOfSize(X);
       for (var i = 0; i < X; i++) {
-        this.grid[i] = [];
-        this.grid[i].length = Y;
+        this.grid[i] = arrayOfSize(Y);
         for (var j = 0; j < Y; j++) {
           this.grid[i][j] = false;
         }
