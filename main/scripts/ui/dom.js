@@ -6,12 +6,12 @@ window.GOL.dom = (function () {
   }
 
   function gameIndexFromRow(tableRow) {
-    var gameContainer = tableRow.parent().parent().parent().parent();
+    var gameContainer = ancestor(tableRow, 4);
     return indexFromGameContainer(gameContainer);
   }
 
   function gameIndexFromButton(button) {
-    var gameContainer = button.parent().parent();
+    var gameContainer = ancestor(button, 2);
     return indexFromGameContainer(gameContainer);
   }
 
@@ -34,6 +34,13 @@ window.GOL.dom = (function () {
       'j': parentRow.parent().children().index(parentRow),
       'index': window.GOL.dom.gameIndexFromRow(parentRow)
     };
+  }
+
+  function ancestor(node, n) {
+    while(n-- > 0) {
+      node = node.parent();
+    }
+    return node;
   }
 
   return {
