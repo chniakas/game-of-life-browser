@@ -5,7 +5,7 @@
         return {
           compare: function (actual, expected) {
             return {
-              pass: window.GOI.areEqualPoints(actual, expected)
+              pass: window.GOL.areEqualPoints(actual, expected)
             }
           }
         };

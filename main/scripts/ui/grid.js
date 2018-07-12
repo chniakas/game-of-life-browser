@@ -1,4 +1,4 @@
-window.GOI.grid = (function () {
+window.GOL.grid = (function () {
 
   function createFromGameOfLife(gameOfLife, gameId) {
     var rows = createData(gameOfLife.getGrid());
@@ -6,8 +6,8 @@ window.GOI.grid = (function () {
   }
 
   function createGridFromData(gameId, rows) {
-    var gameDom = window.GOI.dom.createFromTemplate("#game-template", {"id": gameId});
-    var gridDom = window.GOI.dom.createFromTemplate("#grid-template", {'rows': rows});
+    var gameDom = window.GOL.dom.createFromTemplate("#game-template", {"id": gameId});
+    var gridDom = window.GOL.dom.createFromTemplate("#grid-template", {'rows': rows});
 
     $(".games-container").append(gameDom);
     $(`#game-${gameId} .grid-container`).html(gridDom);
@@ -20,7 +20,7 @@ window.GOI.grid = (function () {
   }
 
   function updateGridFromData(gameId, rows) {
-    var gridDom = window.GOI.dom.createFromTemplate("#grid-template", {'rows': rows});
+    var gridDom = window.GOL.dom.createFromTemplate("#grid-template", {'rows': rows});
     $(`#game-${gameId} .grid-container`).html(gridDom);
   }
 

@@ -1,4 +1,4 @@
-window.GOI.Grid2D = (function (){
+window.GOL.Grid2D = (function (){
   function Grid2D(X, Y) {
     if (X <= 0 || Y <= 0) {
       this.grid = null;

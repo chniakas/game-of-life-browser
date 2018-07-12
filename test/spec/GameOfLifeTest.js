@@ -3,7 +3,7 @@
     var gameOfLife;
 
     beforeEach(function() {
-      gameOfLife = new window.GOI.GameOfLife();
+      gameOfLife = new window.GOL.GameOfLife();
       // D -> DEAD, A -> ALIVE
     });
 

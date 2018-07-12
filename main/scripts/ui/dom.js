@@ -1,4 +1,4 @@
-window.GOI.dom = (function () {
+window.GOL.dom = (function () {
   function createFromTemplate(templateId, data) {
     var source = $(templateId).html();
     var template = Handlebars.compile(source);
@@ -32,7 +32,7 @@ window.GOI.dom = (function () {
     return {
       'i': parentRow.children().index($(cell)),
       'j': parentRow.parent().children().index(parentRow),
-      'index': window.GOI.dom.gameIndexFromRow(parentRow)
+      'index': window.GOL.dom.gameIndexFromRow(parentRow)
     };
   }
 

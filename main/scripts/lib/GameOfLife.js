@@ -1,10 +1,10 @@
-window.GOI.GameOfLife = (function () {
+window.GOL.GameOfLife = (function () {
   function GameOfLife() {
     this.grid = null;
   }
 
   GameOfLife.prototype.setGridDimensions = function(X, Y) {
-    this.grid = new window.GOI.Grid2D(X, Y);
+    this.grid = new window.GOL.Grid2D(X, Y);
   };
 
   GameOfLife.prototype.getGrid = function() {
@@ -48,7 +48,7 @@ window.GOI.GameOfLife = (function () {
 })();
 
 
-window.GOI.areEqualPoints = function (actualPoints, expectedPoints) {
+window.GOL.areEqualPoints = function (actualPoints, expectedPoints) {
     if (actualPoints.length !== expectedPoints.length) {
       return false;
     }
