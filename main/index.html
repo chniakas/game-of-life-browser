@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <title>Game of Life</title>
     <link rel="stylesheet" href="main.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.21.4/system.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.21.4/system.js" charset="utf-8"></script>
     <script src="scripts/init.js" type="text/javascript"></script>
     <script id="grid-template"  type="text/x-handlebars-template">
       <table class="grid">
@@ -35,10 +35,10 @@
   <body>
     <div class="dimensions">
       <label for="X">x-dimension: </label>
-      <input id="x-dimension" type="number" name="X" min="1" required>
+      <input id="x-dimension" type="number" name="X" min="1" max="10" required>
 
       <label for="Y">y-dimension: </label>
-      <input id="y-dimension" type="number" name="Y" min="1" required>
+      <input id="y-dimension" type="number" name="Y" min="1" max="10" required>
 
       <button id="setDimensions" type="button" name="start">Create grid</button>
     </div>

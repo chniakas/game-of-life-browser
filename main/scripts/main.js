@@ -1,45 +1,44 @@
 $(document).ready(function() {
   (function (){
     var intervals = [];
-    var gamesOfLife = [];
+    var games = [];
 
     $("#setDimensions").click(function() {
-      var X = +$("#x-dimension").val();
-      var Y = +$("#y-dimension").val();
+      var {X, Y} = getDimensions();
       if (!isValidDimension(X) || !isValidDimension(Y)) {
         alert('Please enter valid dimensions ([1, 10])');
         return;
       }
-      var gameOfLife = new window.GOL.GameOfLife();
-      var gameId = gamesOfLife.length;
+      var game = new window.GOL.GameOfLife();
+      var gameId = games.length;
 
-      gameOfLife.setGridDimensions(Y, X);
-      gamesOfLife.push(gameOfLife);
+      game.setGridDimensions(Y, X);
+      games.push(game);
       intervals.push(null);
-      window.GOL.grid.createFromGameOfLife(gameOfLife, gameId);
+      window.GOL.grid.createFromGameOfLife(game, gameId);
     });
 
     $(".games-container").on("click", ".grid-cell", function() {
       var info = window.GOL.dom.gameIndexFromCell(this);
-      if (isGameInProgress(info.index)) {
+      if (gameInProgress(info.index)) {
         return;
       }
 
       window.GOL.dom.toggleCellInHtml(this);
-      gamesOfLife[info.index].getGrid().toggle(info.j, info.i);
+      games[info.index].getGrid().toggle(info.j, info.i);
     });
 
     $(".games-container").on("click", ".startButton", function() {
       var index = window.GOL.dom.gameIndexFromButton($(this));
-      clearIntervalIfNeeded(index);
+      clearInterval(index);
       intervals[index] = setInterval(function () {
-        var gameOfLife = gamesOfLife[index];
+        var game = games[index];
 
-        var previousPoints = gameOfLife.getAlivePoints();
-        gameOfLife.nextStep();
-        var newPoints = gameOfLife.getAlivePoints();
+        var previousPoints = game.getAlivePoints();
+        game.nextStep();
+        var newPoints = game.getAlivePoints();
 
-        window.GOL.grid.updateFromGameOfLife(gameOfLife, index);
+        window.GOL.grid.updateFromGameOfLife(game, index);
         if (window.GOL.areEqualPoints(previousPoints, newPoints)) {
           showStart(index);
         }
@@ -53,14 +52,21 @@ $(document).ready(function() {
       showStart(index);
     });
 
-    function clearIntervalIfNeeded(index) {
-      if (isGameInProgress(index)) {
+    function getDimensions() {
+      return {
+        X: +$("#x-dimension").val(),
+        Y: +$("#y-dimension").val()
+      }
+    }
+
+    function resetInterval(index) {
+      if (gameInProgress(index)) {
         clearInterval(intervals[index]);
         intervals[index] = null;
       }
     }
 
-    function isGameInProgress(index) {
+    function gameInProgress(index) {
       return intervals[index] !== null;
     }
 
@@ -69,7 +75,7 @@ $(document).ready(function() {
     }
 
     function showStart(index) {
-      clearIntervalIfNeeded(index);
+      resetInterval(index);
       $(`#game-${index} .startButton`).show();
       $(`#game-${index} .stopButton`).hide();
     }
